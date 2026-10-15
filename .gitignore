@@ -1,0 +1,18 @@
+# Local Python environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+
+# Personal settings and credentials
+.env
+.env.*
+!.env.example
+
+# Downloaded data and generated results (see data/README.md)
+data/raw/
+data/processed/
+reports/generated/

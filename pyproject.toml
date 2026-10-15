@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nifty50-ta-regression"
+version = "0.1.0"
+description = "Reproducible study of technical indicators, return prediction, and backtesting for Nifty 50 stocks"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "matplotlib==3.10.6",
+  "numpy==2.2.6",
+  "openpyxl==3.1.5",
+  "pandas==2.3.3",
+  "PyYAML==6.0.3",
+  "scikit-learn==1.7.2",
+  "yfinance==0.2.66",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
