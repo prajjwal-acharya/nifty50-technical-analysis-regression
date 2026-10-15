@@ -15,4 +15,6 @@ __pycache__/
 # Downloaded data and generated results (see data/README.md)
 data/raw/
 data/processed/
+data/50Nifty50.xlsx
+data/Technical Analysis.xlsx
 reports/generated/

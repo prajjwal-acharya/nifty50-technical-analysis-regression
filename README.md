@@ -2,12 +2,12 @@
 
 This is a Business Analytics project about a practical question: **can technical indicators help predict future stock returns, and can a rule based on those predictions perform better than buy-and-hold after trading costs?** The proposed scope is daily data for 50 Nifty 50 stocks across ten years. We will use linear regression for prediction and a separate backtest for trading performance.
 
-**Current status:** this repository contains the shared environment and folder structure. Data, models, results, and final research choices have **not** been created or confirmed yet. See [the decision list](docs/decisions.md) before treating any method as final.
+**Current status:** the reproducible [data pipeline](docs/data-pipeline.md) creates finalized price, feature, and separate one-day/five-day target tables for the official Nifty 50 universe as of 15 October 2026. The workbook's WIPRO rows were replaced with BSE data from dated NSE bhavcopies. A full NSE action search found an omitted BEL bonus and eight rights issues; all 30 split/bonus factors, seven demerger dates, and eight rights dates now pass exchange verification. The original workbook download URL/date remain unknown, but a 723-stock-date NSE bhavcopy spot-check found no price differences. Demergers and rights offerings start new analytical segments, and cash dividends are excluded. Models, backtests, and performance results have not been created. See [the decision list](docs/decisions.md) for the current method choices.
 
 ## The three parts of the work
 
-1. **Data collection and finalization:** agree on the stock list, dates, source, adjustments, and chronological training/validation/test periods; build a five-stock pilot, then the 50-stock dataset.
-2. **Model creation and training:** calculate indicators, define the future-return target, train linear regression, and choose the model and trading rules using training and validation data only.
+1. **Data collection and finalization (complete for this release):** the pipeline has fixed the stock list, dates, source checks, adjustments, indicators, targets, and chronological training/validation/test periods for all 50 stocks.
+2. **Model creation and training:** use the prepared indicators and separate return targets to train linear regression, then choose the model and trading rules using training and validation data only.
 3. **Testing and evaluation:** freeze the choices, evaluate once on the later test period, compare the trading strategy with buy-and-hold, and prepare the Excel, Pine Script, report, and presentation evidence.
 
 Prediction accuracy and trading performance are different results; we will report both. No profitable outcome is assumed.
@@ -42,7 +42,7 @@ You can do the main Python work in **Colab or on your own computer**. Both route
    !python -m nifty50_ta
    ```
 
-4. The last command should finish with **`Environment OK. Project analysis has not started yet.`** Future notebooks will be kept in `notebooks/` and will use the same Python code in `src/`.
+4. The last command should finish with **`Environment OK. Run python -m nifty50_ta.data_pipeline to rebuild processed data.`** To rebuild, first obtain the unchanged raw workbook in `data/raw/`; see [the pipeline contract](docs/data-pipeline.md). Future notebooks will call the same Python code in `src/`.
 
 Colab's working machine is temporary. If a runtime is reset, repeat the clone and install steps. Do not keep your only copy of work or data in `/content`. Store accepted code in GitHub and the agreed data snapshot in a shared, persistent location. A personal Drive copy of a notebook is not the official project version.
 
@@ -79,7 +79,7 @@ Colab's working machine is temporary. If a runtime is reset, repeat the clone an
    python -m nifty50_ta
    ```
 
-   The check should finish with **`Environment OK. Project analysis has not started yet.`** Run the activation command again when you open a new terminal. Use `deactivate` to leave the environment.
+   The check should finish with **`Environment OK. Run python -m nifty50_ta.data_pipeline to rebuild processed data.`** Run the activation command again when you open a new terminal. Use `deactivate` to leave the environment.
 
 **Do not change installed versions individually to fix one person's machine.** Record the problem in a GitHub issue so the team can make and verify one shared dependency change.
 
@@ -87,10 +87,10 @@ Colab's working machine is temporary. If a runtime is reset, repeat the clone an
 
 | Path | What belongs there |
 | --- | --- |
-| `src/nifty50_ta/` | Reusable Python code for data, indicators, model training, backtesting, and evaluation. Currently it only contains the setup check. |
+| `src/nifty50_ta/` | Reusable Python code. It currently contains the setup check and data processing pipeline. |
 | `notebooks/` | Short Colab/Jupyter notebooks that call the reusable code and show results. |
-| `config/` | Agreed dates, feature settings, costs, and other project choices once finalized. |
-| `data/` | Instructions for raw and cleaned data. The actual `raw/` and `processed/` files are ignored by Git for now. |
+| `config/` | Frozen data-release settings and event reviews; trading-rule and cost choices are still open. |
+| `data/` | Instructions for raw and processed data. The actual `raw/` and `processed/` files are ignored by Git. |
 | `docs/` | Project decisions and method notes. Start with `docs/decisions.md`. |
 | `tests/` | Focused checks for date alignment, indicators, and backtest rules when those components exist. |
 | `excel/` | Workbook for independent checks of selected calculations. |

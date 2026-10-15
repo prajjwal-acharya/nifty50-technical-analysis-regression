@@ -1,0 +1,43 @@
+{
+  "release_date": "2026-10-15",
+  "pipeline_version": "1.1",
+  "status": "finalized_for_downstream",
+  "audit_status": "passed",
+  "source_window": {
+    "first_date": "2016-10-13",
+    "last_date": "2026-10-13"
+  },
+  "universe_as_of_date": "2026-10-15",
+  "counts": {
+    "stocks": 50,
+    "price_rows": 119567,
+    "feature_ready_rows": 116382,
+    "target_1d_rows": 116219,
+    "target_5d_rows": 115569
+  },
+  "input_sha256": {
+    "50Nifty50.xlsx": "3aaab1c3835e3f0337f7269cc5af50c266b7f232cf2dd0cc2e0caddaaaa5d88d",
+    "bse_nse_prices.csv": "8f9f2b99910e2786bd69199d6f06fd060c50a8a079c8835801f5b2bee584755e",
+    "nse_all_corporate_actions_snapshot.json": "150ab8ae73d86cf7b9f9ae2048b3d3d1ece6886186892768c62895599d9ef05b",
+    "nse_corporate_actions_snapshot.json": "5ce24034f06e0c50f92d25195101f591cd10878a6e92e09388febaef70912965",
+    "nse_outlier_snapshot.json": "ef21257f0e5499ba205560e43e5751e97bee76bd016412dfbbb27c462efc677c",
+    "nse_workbook_spotcheck.json": "c6c05b1286ac22be03c549aec7042cd67022d6cac01931efbae9b95e99561af0"
+  },
+  "versioned_config_sha256": {
+    "data_pipeline.json": "c3f9e87720b3ba3cce1a4a26557c7f4f8e91cf19dfcb77b53e7e29d47de9f9d6",
+    "nifty50_universe.json": "9a9d37f08d4127e1a12668f88c666fb50bd3f6e6c53e7781d051992116a51c30",
+    "corporate_actions.csv": "ee8ec5dd82e56afab03b5cb975e46c4b1e7cd18ac801e674dc9ca8fac8cbd0dd",
+    "outlier_reviews.csv": "94a10ca9eff13f49c340a891893625090f49cfd83c9ca076321eaa529fe8ea96"
+  },
+  "output_sha256": {
+    "corporate_actions.csv": "cc5c0c05dcb0343537f90917c17781a8da706b8d9b0228ac5f8db82a87328724",
+    "daily_prices.csv.gz": "b52449fe17b835c05e86bddeeb283012cafd08b055d3a86a0b2d816f0e9f9cf5",
+    "features.csv.gz": "f712d36cee2c6f90aa10e660962bab686796ce3325aa61fd94d10b8ceaa40ca5",
+    "outlier_review.csv": "f9c988ab0538d1f60539fc0343d926178ac0939b4c6ed22dc50f69798ef71953",
+    "quality_report.json": "80e8d623cd84289012ca66179d6978f69335d5961981d1c991b53376a657c95f",
+    "stock_dictionary.csv": "f8d44bd188def0288ff61ad262df0e43162ca89e374a8f1de2361d3090a662aa",
+    "target_1d.csv.gz": "68b602933a7bfe7519144b9d534350eb2089437ec15be4dcf2a12723f94fbc71",
+    "target_5d.csv.gz": "cec8162829ae483ce7af23840d594003514d326b771039e89552c917c8b099da"
+  },
+  "notes": "Metadata only; raw and processed market-data files are local and Git-ignored."
+}

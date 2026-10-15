@@ -1,0 +1,16 @@
+{
+  "version": "1.1",
+  "source_first_date": "2016-10-13",
+  "source_last_date": "2026-10-13",
+  "be_initial_days": {
+    "JIOFIN": 10,
+    "MAXHEALTH": 10
+  },
+  "train_end": "2024-12-31",
+  "validation_end": "2025-12-31",
+  "test_end": "2026-10-13",
+  "outlier_absolute_return_threshold": 0.2,
+  "cash_dividends": "excluded",
+  "demergers": "segment_boundary_no_cross_event_labels",
+  "rights_issues": "segment_boundary_no_cross_event_labels"
+}

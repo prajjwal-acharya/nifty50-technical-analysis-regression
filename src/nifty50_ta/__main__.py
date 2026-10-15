@@ -21,7 +21,7 @@ def main() -> None:
     for distribution, module in packages.items():
         import_module(module)
         print(f"{distribution}: {version(distribution)}")
-    print("Environment OK. Project analysis has not started yet.")
+    print("Environment OK. Run python -m nifty50_ta.data_pipeline to rebuild processed data.")
 
 
 if __name__ == "__main__":
