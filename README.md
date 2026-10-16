@@ -1,118 +1,68 @@
-# Nifty 50 Technical Analysis and Regression Backtesting
+# Nifty 50 closing-price forecasts
 
-This is a Business Analytics project about a practical question: **can technical indicators help predict future stock returns, and can a rule based on those predictions perform better than buy-and-hold after trading costs?** The proposed scope is daily data for 50 Nifty 50 stocks across ten years. We will use linear regression for prediction and a separate backtest for trading performance.
+This repository reproduces two historical forecasts for the current 50-stock Nifty 50 basket: the **next trading-session** close and the **fifth subsequent trading-session** close. Forecasts and errors use NSE quoted closing prices in rupees. The unchanged current close is the required baseline. The five-session fitted candidate did not pass its 2025 validation gate, so its adopted forecast remains the unchanged close.
 
-**Current status:** the reproducible [data pipeline](docs/data-pipeline.md) creates finalized price, feature, and separate one-day/five-day target tables for the official Nifty 50 universe as of 15 October 2026. The workbook's WIPRO rows were replaced with BSE data from dated NSE bhavcopies. A full NSE action search found an omitted BEL bonus and eight rights issues; all 30 split/bonus factors, seven demerger dates, and eight rights dates now pass exchange verification. The original workbook download URL/date remain unknown, but a 723-stock-date NSE bhavcopy spot-check found no price differences. Demergers and rights offerings start new analytical segments, and cash dividends are excluded. Models, backtests, and performance results have not been created. See [the decision list](docs/decisions.md) for the current method choices.
+The fixed data release ends on **13 October 2026**. Both models have already been evaluated on 2026 data; those scores are historical evidence, not a fresh blind test or live forecast. See [model results](reports/model-results-2026-10-16.md), [the forecasting contract](docs/price-forecasting-plan.md), and [the release decisions](docs/decisions.md).
 
-## The three parts of the work
+## Set up
 
-1. **Data collection and finalization (complete for this release):** the pipeline has fixed the stock list, dates, source checks, adjustments, indicators, targets, and chronological training/validation/test periods for all 50 stocks.
-2. **Model creation and training:** use the prepared indicators and separate return targets to train linear regression, then choose the model and trading rules using training and validation data only.
-3. **Testing and evaluation:** freeze the choices, evaluate once on the later test period, compare the trading strategy with buy-and-hold, and prepare the Excel, Pine Script, report, and presentation evidence.
+Use Python 3.12. From the repository root:
 
-Prediction accuracy and trading performance are different results; we will report both. No profitable outcome is assumed.
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m nifty50_ta
+```
 
-## What you need
+On Windows PowerShell, create the environment with `py -3.12 -m venv .venv` and activate it with `.venv\Scripts\Activate.ps1`. The project is portable: commands and code use repository-relative paths. No GPU, personal Drive path, or CI service is required.
 
-- A GitHub account and Git installed if you will contribute code.
-- **Python 3.12** if you will run the project on your computer. Download it from [python.org](https://www.python.org/downloads/) if needed. The current project setup intentionally checks for Python 3.12 so teammates do not silently run different Python versions.
-- Internet access for the initial package installation and, later, for collecting market data.
-- A Google account if you want to use [Google Colab](https://colab.research.google.com/). Colab runs Python in a browser; you do not need to install Python locally for this route.
-- TradingView only when working on the Pine Script demonstration. Microsoft Excel or a compatible spreadsheet app is used for selected independent checks.
+## Obtain or rebuild the data
 
-You can do the main Python work in **Colab or on your own computer**. Both routes install this same repository. A GPU and paid Colab plan are not part of the setup.
+The raw workbook and processed market-data files are not in Git. Obtain the agreed raw snapshot, place it as described in [data/README.md](data/README.md), then run:
 
-## Option A: set up in Google Colab
+```bash
+python -m nifty50_ta.data_pipeline
+python -m nifty50_ta.release_audit
+```
 
-1. Open [Google Colab](https://colab.research.google.com/) and choose **New notebook**.
-2. Run this in a code cell to check the Python version:
+[The data-pipeline contract](docs/data-pipeline.md) lists the NSE source collectors, verification commands, input files, corporate-action rules, and exact release checksums. If a teammate has the verified processed snapshot, it can be placed in `data/processed/` instead of rebuilding. The model feature builder checks `features.csv.gz` against the versioned release lock.
 
-   ```python
-   import sys
-   print(sys.version)
-   ```
+## Rerun the two models
 
-   It should start with `3.12`. If it does not, choose a Python 3.12 runtime in **Runtime → Change runtime type**, if available, or tell the project maintainer before proceeding.
-3. Run these lines in separate code cells (or one cell in this order):
+Run these from the repository root after the processed release is available:
 
-   ```python
-   !git clone https://github.com/prajjwal-acharya/nifty50-technical-analysis-regression.git
-   %cd nifty50-technical-analysis-regression
-   %pip install -r requirements.txt
-   !python -m nifty50_ta
-   ```
+```bash
+python -m scripts.build_model_features
+python -m scripts.run_one_day_model
+python -m scripts.evaluate_5d_2025
+python -m scripts.evaluate_corrected_5d_2026
+```
 
-4. The last command should finish with **`Environment OK. Run python -m nifty50_ta.data_pipeline to rebuild processed data.`** To rebuild, first obtain the unchanged raw workbook in `data/raw/`; see [the pipeline contract](docs/data-pipeline.md). Future notebooks will call the same Python code in `src/`.
-
-Colab's working machine is temporary. If a runtime is reset, repeat the clone and install steps. Do not keep your only copy of work or data in `/content`. Store accepted code in GitHub and the agreed data snapshot in a shared, persistent location. A personal Drive copy of a notebook is not the official project version.
-
-## Option B: set up on your own computer
-
-1. Install [Git](https://git-scm.com/downloads) and Python 3.12.
-2. Open Terminal (macOS/Linux) or PowerShell (Windows), then download the repository:
-
-   ```bash
-   git clone https://github.com/prajjwal-acharya/nifty50-technical-analysis-regression.git
-   cd nifty50-technical-analysis-regression
-   ```
-
-3. Create a **virtual environment**, a project-specific folder for Python packages. It keeps this project's packages separate from other Python projects.
-
-   macOS/Linux:
-
-   ```bash
-   python3.12 -m venv .venv
-   source .venv/bin/activate
-   ```
-
-   Windows PowerShell:
-
-   ```powershell
-   py -3.12 -m venv .venv
-   .venv\Scripts\Activate.ps1
-   ```
-
-4. Install the project and check it:
-
-   ```bash
-   python -m pip install -r requirements.txt
-   python -m nifty50_ta
-   ```
-
-   The check should finish with **`Environment OK. Run python -m nifty50_ta.data_pipeline to rebuild processed data.`** Run the activation command again when you open a new terminal. Use `deactivate` to leave the environment.
-
-**Do not change installed versions individually to fix one person's machine.** Record the problem in a GitHub issue so the team can make and verify one shared dependency change.
-
-## Folder guide
-
-| Path | What belongs there |
+| Command | Output |
 | --- | --- |
-| `src/nifty50_ta/` | Reusable Python code. It currently contains the setup check and data processing pipeline. |
-| `notebooks/` | Short Colab/Jupyter notebooks that call the reusable code and show results. |
-| `config/` | Frozen data-release settings and event reviews; trading-rule and cost choices are still open. |
-| `data/` | Instructions for raw and processed data. The actual `raw/` and `processed/` files are ignored by Git. |
-| `docs/` | Project decisions and method notes. Start with `docs/decisions.md`. |
-| `tests/` | Focused checks for date alignment, indicators, and backtest rules when those components exist. |
-| `excel/` | Workbook for independent checks of selected calculations. |
-| `pine/` | Pine Script strategy and notes for TradingView checks. |
-| `reports/` | Final written report, selected figures, and presentation. |
+| `build_model_features` | Rebuilds and verifies the 26-feature next-session and 30-feature corrected fifth-session stores under ignored `data/processed/`. |
+| `run_one_day_model` | Fits the frozen 26-feature LightGBM through 2024; saves its model, 2025 validation and historical 2026 predictions under `reports/generated/one_day/`. |
+| `evaluate_5d_2025` | Selects the corrected 30-feature LightGBM on 2021–2024 folds, fits through 2024, and saves its model and 2025 validation results under `reports/generated/price_forecasting_5d_2025/`. The unchanged-price gate is retained. |
+| `evaluate_corrected_5d_2026` | Loads the latest saved fifth-session model without refitting and scores the already-inspected 2026 period under `reports/generated/price_forecasting_5d_2026_corrected/`. Pass `--model-run PATH` to choose a specific saved run. |
 
-The code will use repository-relative paths or a configurable data location. It must not require anyone's personal username, home folder, or Google Drive path.
+Each run creates a timestamped directory and leaves earlier outputs intact. To check code and data boundaries:
 
-## What Colab, Excel, and Pine Script each do
+```bash
+python -m unittest discover -s tests -q
+```
 
-- **Colab/Python:** the main reproducible workflow across all selected stocks: preparation, indicators, model fitting, chronological validation, backtest, and summary tables.
-- **Excel:** independently check a small, documented sample of important calculations. It is not the source of the full model.
-- **Pine Script:** TradingView's chart scripting language. It will demonstrate and check the agreed trading rule on selected charts. A Pine strategy operates on a chart dataset, so the 50-stock summary stays in Python.
+## Repository layout
 
-The exact evidence required from Excel and Pine Script must be confirmed with the evaluator; see `docs/decisions.md`.
+| Path | Purpose |
+| --- | --- |
+| `src/nifty50_ta/data_pipeline.py` and `fetch_*.py`, `verify_*.py`, `release_audit.py` | Raw-data collection, processing, source verification, and release audit. |
+| `src/nifty50_ta/model_common.py`, `feature_expansion.py`, `cross_sectional_expansion.py`, `one_day_model.py`, `five_day_model.py`, `price_forecasting.py` | Reusable code required by the two models. |
+| `scripts/` | Four entry points shown above; no exploratory model-comparison scripts. |
+| `config/` | Frozen universe, events, and processing settings. |
+| `data/` | Instructions and ignored raw/processed market data. |
+| `docs/` | Data contract, field definitions, current forecast objective, and decisions. |
+| `reports/` | Current results summary; generated run outputs are ignored by Git. |
+| `tests/` | Checks for processing, feature timing, and forecast boundaries. |
 
-## Working together on GitHub
-
-1. Open or claim a GitHub issue for a defined task. Keep the three project parts visible as milestones or issue groups.
-2. Create a short branch for the task, make a focused change, and open a pull request into `main`.
-3. Ask a teammate to review the pull request. Explain what changed and how you checked it before merging.
-4. Keep accepted code and method decisions in the repository. Do not commit passwords, API keys, personal `.env` files, downloaded datasets of uncertain redistribution rights, or generated bulk outputs.
-5. Once each part is accepted, tag the corresponding code version and record the matching data snapshot and settings. This lets the final report identify exactly what produced its results.
-
-There is **no automated CI workflow yet**, as requested. Reviews and local/Colab checks are the initial quality gate.
+GitHub is the shared source for code and decisions. Do not commit raw market data, generated model runs, credentials, or personal runtime paths. No automated CI workflow is configured.

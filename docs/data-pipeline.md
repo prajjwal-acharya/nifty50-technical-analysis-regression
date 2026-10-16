@@ -118,8 +118,9 @@ each segment have no target. Five-day labels overlap; downstream evaluation
 must respect this dependence.
 
 The selected calendar splits are training through 2024-12-31, validation in
-2025, and an untouched test from 2026-01-01 through 2026-10-13. A new model
-must be selected using only training and validation data. Features at the
+2025, and historical test from 2026-01-01 through 2026-10-13. Both current
+models have been scored on 2026, so this period is no longer blind. A new model
+must be selected using only earlier development data. Features at the
 start of a split may use preceding historical prices, which were already
 known. Results across stocks must use matching dates for fair comparison.
 

@@ -4,7 +4,6 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
-.ipynb_checkpoints/
 .DS_Store
 
 # Personal settings and credentials
@@ -17,4 +16,5 @@ data/raw/
 data/processed/
 data/50Nifty50.xlsx
 data/Technical Analysis.xlsx
+data/processed.zip
 reports/generated/

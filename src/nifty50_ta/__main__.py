@@ -12,11 +12,8 @@ def main() -> None:
     packages = {
         "numpy": "numpy",
         "pandas": "pandas",
-        "scikit-learn": "sklearn",
-        "matplotlib": "matplotlib",
-        "yfinance": "yfinance",
+        "lightgbm": "lightgbm",
         "openpyxl": "openpyxl",
-        "PyYAML": "yaml",
     }
     for distribution, module in packages.items():
         import_module(module)
