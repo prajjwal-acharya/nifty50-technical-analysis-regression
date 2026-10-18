@@ -98,8 +98,9 @@ means the next scheduled exchange session lacks a complete report pair.
 The action check captures what NSE reports **at issue time**. An action
 announced later can still affect a previously issued forecast; the stored
 review timestamp and immutable forecast expose that limitation. The pipeline
-does not refit either model. Publishing outputs to Pages and scheduling the
-runner belong to later phases.
+does not refit either model. The [Phase 3 Pages dashboard](pages-dashboard.md)
+is implemented with a public-data gate; scheduling the runner and connecting
+a permitted public endpoint belong to Phase 4.
 
 The audited release is a frozen starting point. New observations are separate
 dated files, so adding them cannot change the release lock. The store does not
