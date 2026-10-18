@@ -24,3 +24,6 @@ If using the local `processed.zip` handoff, extract it from the `data/`
 directory so its `processed/` entry becomes `data/processed/`, then run
 `python -m nifty50_ta.release_audit` before training.
 The archive itself is ignored by Git.
+
+For the separate private, append-ready live state and its reproducible
+bootstrap command, see [the live-data store guide](../docs/live-data-store.md).
