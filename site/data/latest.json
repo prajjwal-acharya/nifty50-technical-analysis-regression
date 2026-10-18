@@ -1,7 +1,1113 @@
 {
+  "basket_as_of": "2026-10-15",
+  "fifth_session_policy": "unchanged_close",
+  "issued_at_utc": "2026-10-18T04:46:32.981620+00:00",
+  "latest_verified_session": "2026-10-16",
+  "model_label": "Frozen 26-feature LightGBM for next session",
+  "origin_session": "2026-10-16",
   "schema_version": 1,
-  "status": "unavailable",
-  "reason": "Public market-data display requires documented NSE permission.",
-  "latest_verified_session": null,
-  "stocks": []
+  "source_label": "NSE end-of-day security report and CM UDiFF bhavcopy",
+  "status": "current",
+  "stocks": [
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2692.6896,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2692.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 2692.0,
+      "symbol": "ADANIENT"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1750.9856,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1750.8,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1750.8,
+      "symbol": "ADANIPORTS"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 7891.7157,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 7890.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 7890.0,
+      "symbol": "APOLLOHOSP"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2332.6069,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2331.9,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 2331.9,
+      "symbol": "ASIANPAINT"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1290.193,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1290.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1290.0,
+      "symbol": "AXISBANK"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 10406.7507,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 10405.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 10405.0,
+      "symbol": "BAJAJ-AUTO"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1729.4988,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1729.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1729.0,
+      "symbol": "BAJAJFINSV"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 982.1329,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 982.1,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 982.1,
+      "symbol": "BAJFINANCE"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 376.9615,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 376.85,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 376.85,
+      "symbol": "BEL"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1905.0638,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1905.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1905.0,
+      "symbol": "BHARTIARTL"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 3363.9056,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 3363.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 3363.0,
+      "symbol": "BSE"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1325.4394,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1325.1,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1325.1,
+      "symbol": "CIPLA"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 417.3033,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 417.2,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 417.2,
+      "symbol": "COALINDIA"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1233.0627,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1233.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1233.0,
+      "symbol": "DRREDDY"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 7284.7286,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 7284.5,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 7284.5,
+      "symbol": "EICHERMOT"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 325.3169,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 325.3,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 325.3,
+      "symbol": "ETERNAL"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2920.1188,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2920.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 2920.0,
+      "symbol": "GRASIM"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1379.9957,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1380.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1380.0,
+      "symbol": "HCLTECH"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 728.9294,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 728.85,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 728.85,
+      "symbol": "HDFCBANK"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 553.017,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 553.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 553.0,
+      "symbol": "HDFCLIFE"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 908.0499,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 908.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 908.0,
+      "symbol": "HINDALCO"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1894.2002,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1893.8,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1893.8,
+      "symbol": "HINDUNILVR"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1397.0874,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1397.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1397.0,
+      "symbol": "ICICIBANK"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 4688.2718,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 4686.9,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 4686.9,
+      "symbol": "INDIGO"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1161.2179,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1161.2,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1161.2,
+      "symbol": "INFY"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 263.5671,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 263.5,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 263.5,
+      "symbol": "ITC"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 216.2985,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 216.25,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 216.25,
+      "symbol": "JIOFIN"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1216.3762,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1216.3,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1216.3,
+      "symbol": "JSWSTEEL"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 447.5073,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 447.4,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 447.4,
+      "symbol": "KOTAKBANK"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 3628.1463,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 3627.1,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 3627.1,
+      "symbol": "LT"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2920.9179,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2920.9,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 2920.9,
+      "symbol": "M&M"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 11489.6995,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 11489.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 11489.0,
+      "symbol": "MARUTI"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 846.2565,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 846.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 846.0,
+      "symbol": "MAXHEALTH"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1265.9083,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1265.5,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1265.5,
+      "symbol": "NESTLEIND"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 315.2053,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 315.15,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 315.15,
+      "symbol": "NTPC"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 222.0637,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 222.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 222.0,
+      "symbol": "ONGC"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 250.478,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 250.45,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 250.45,
+      "symbol": "POWERGRID"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1211.456,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1211.2,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1211.2,
+      "symbol": "RELIANCE"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1657.2372,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1656.8,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1656.8,
+      "symbol": "SBILIFE"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 962.7118,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 962.6,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 962.6,
+      "symbol": "SBIN"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 940.2533,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 939.95,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 939.95,
+      "symbol": "SHRIRAMFIN"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1759.2487,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1758.8,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1758.8,
+      "symbol": "SUNPHARMA"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 979.1636,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 978.9,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 978.9,
+      "symbol": "TATACONSUM"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 175.5485,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 175.5,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 175.5,
+      "symbol": "TATASTEEL"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2465.038,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2465.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 2465.0,
+      "symbol": "TCS"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1790.0276,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 1790.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 1790.0,
+      "symbol": "TECHM"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 4445.9729,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 4444.8,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 4444.8,
+      "symbol": "TITAN"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 286.8932,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 286.85,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 286.85,
+      "symbol": "TMPV"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2959.0393,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 2958.7,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 2958.7,
+      "symbol": "TRENT"
+    },
+    {
+      "horizons": {
+        "1": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 10908.1146,
+          "policy": "frozen_one_day_lightgbm",
+          "status": "issued",
+          "target_session": "2026-10-19"
+        },
+        "5": {
+          "absolute_error": null,
+          "actual_close": null,
+          "forecast_close": 10907.0,
+          "policy": "unchanged_close",
+          "status": "issued",
+          "target_session": "2026-10-26"
+        }
+      },
+      "origin_close": 10907.0,
+      "symbol": "ULTRACEMCO"
+    }
+  ]
 }
