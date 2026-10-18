@@ -18,8 +18,12 @@ def main() -> None:
                         help="Read previously downloaded official report pairs from this directory")
     parser.add_argument("--fail-if-waiting", action="store_true",
                         help="Exit nonzero when a due NSE session has no complete report pair")
+    parser.add_argument("--result-output", type=Path,
+                        help="Save the run result for the workflow's post-commit alert check")
     args = parser.parse_args()
     result = run(args.state_dir, args.calendar, source_dir=args.source_dir)
+    if args.result_output:
+        args.result_output.write_text(json.dumps(result, sort_keys=True) + "\n")
     print(json.dumps(result, indent=2))
     if args.fail_if_waiting and result["status"] == "waiting_for_reports":
         raise SystemExit(2)

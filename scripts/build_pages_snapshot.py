@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 
 from nifty50_ta.data_pipeline import ROOT
-from nifty50_ta.live_eod import Calendar, IST, UTC, read_sessions
+from nifty50_ta.live_eod import Calendar, IST, UTC, read_sessions, validate_prospective_issue
 from scripts.verify_live_store import verify
 
 
@@ -42,16 +42,18 @@ def build_snapshot(state_dir: Path, calendar_path: Path,
         return unavailable("No prospective forecast has been issued.", latest)
     issued = json.loads(forecasts[-1].read_text())
     origin = date.fromisoformat(issued["origin_session"])
-    if (origin.isoformat() > latest or issued["issue_kind"] != "prospective"
+    if (origin.isoformat() > latest
             or issued["model_sha256"] != manifest["one_day_model_sha256"]
             or issued["calendar_sha256"] != calendar.sha256):
         raise ValueError("Latest forecast does not match the verified store and calendar")
+    validate_prospective_issue(issued, calendar)
     origin_rows = prices.loc[prices.date.eq(pd.Timestamp(origin))].set_index("symbol")
     if set(origin_rows.index) != symbols or len(origin_rows) != 50:
         raise ValueError("Forecast origin has incomplete verified prices")
 
     keyed = {(entry["symbol"], entry["horizon"]): entry for entry in issued["forecasts"]}
-    if len(keyed) != 100 or set(keyed) != {(symbol, horizon) for symbol in symbols for horizon in (1, 5)}:
+    if (len(issued["forecasts"]) != 100 or len(keyed) != 100
+            or set(keyed) != {(symbol, horizon) for symbol in symbols for horizon in (1, 5)}):
         raise ValueError("Forecast must cover both horizons for the full basket")
     actuals = prices.set_index([prices.date.dt.date, "symbol"]).raw_close
     stocks = []
@@ -87,10 +89,7 @@ def build_snapshot(state_dir: Path, calendar_path: Path,
         stocks.append({"symbol": symbol, "origin_close": reference_close, "horizons": horizons})
 
     next_target = calendar.forward(origin, 1)
-    issued_at = datetime.fromisoformat(issued["issued_at_utc"])
     next_open = datetime.combine(next_target, time(9), IST)
-    if issued_at.tzinfo is None or issued_at.astimezone(IST) >= next_open:
-        raise ValueError("Forecast was not issued before the next target opened")
     return {
         "schema_version": 1,
         "status": "current" if latest < next_target.isoformat() and now.astimezone(IST) < next_open

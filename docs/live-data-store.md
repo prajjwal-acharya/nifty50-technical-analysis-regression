@@ -99,8 +99,10 @@ The action check captures what NSE reports **at issue time**. An action
 announced later can still affect a previously issued forecast; the stored
 review timestamp and immutable forecast expose that limitation. The pipeline
 does not refit either model. The [Phase 3 Pages dashboard](pages-dashboard.md)
-is implemented with a public-data gate. The [Phase 4 private workflow](nightly-automation.md)
-is installed with separate collection and publication gates.
+publishes an allowlisted JSON snapshot. The [Phase 4 private workflow](nightly-automation.md)
+has separate collection and publication gates, enabled after the repository
+owner confirmed both permissions. The [Phase 5 replay](phase5-verification.md)
+checks the frozen model and public output against cached official report pairs.
 
 The audited release is a frozen starting point. New observations are separate
 dated files, so adding them cannot change the release lock. The store does not

@@ -56,3 +56,5 @@ The current calendar covers 2026 only. Before 2027 or an exceptional calendar
 change, add and review the next NSE equity calendar, update the pinned public
 pipeline commit in the private workflow, and verify strict target-session
 dates. The runner fails outside its reviewed calendar rather than guessing.
+The [Phase 5 replay and recovery guide](phase5-verification.md) records the
+production verification and repeatable check command.

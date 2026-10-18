@@ -16,7 +16,8 @@ import pandas as pd
 
 from nifty50_ta.data_pipeline import ROOT
 from nifty50_ta.live_eod import (Calendar, build_outcomes, eligible_for_issue,
-                                  parse_session, path_for, write_once)
+                                  parse_session, path_for, validate_prospective_issue,
+                                  write_once)
 from scripts.run_live_eod import main as runner_main
 
 
@@ -25,13 +26,16 @@ CALENDAR = ROOT / "config/nse_equity_calendar_2026.json"
 
 class LiveEodTests(unittest.TestCase):
     def test_scheduled_runner_fails_when_report_pair_is_missing(self) -> None:
-        with (patch("sys.argv", ["run_live_eod", "--state-dir", "/tmp/state",
-                                 "--fail-if-waiting"]),
-              patch("scripts.run_live_eod.run", return_value={"status": "waiting_for_reports"})):
-            with redirect_stdout(io.StringIO()):
-                with self.assertRaises(SystemExit) as raised:
-                    runner_main()
-        self.assertEqual(raised.exception.code, 2)
+        with tempfile.TemporaryDirectory() as temp:
+            result_path = Path(temp) / "result.json"
+            with (patch("sys.argv", ["run_live_eod", "--state-dir", "/tmp/state",
+                                     "--fail-if-waiting", "--result-output", str(result_path)]),
+                  patch("scripts.run_live_eod.run", return_value={"status": "waiting_for_reports"})):
+                with redirect_stdout(io.StringIO()):
+                    with self.assertRaises(SystemExit) as raised:
+                        runner_main()
+            self.assertEqual(raised.exception.code, 2)
+            self.assertEqual(json.loads(result_path.read_text())["status"], "waiting_for_reports")
 
     def test_exact_exchange_observation_horizons(self) -> None:
         calendar = Calendar(CALENDAR)
@@ -74,13 +78,34 @@ class LiveEodTests(unittest.TestCase):
         with patch("nifty50_ta.live_eod.report_body", side_effect=[security, archive(bad)]):
             with self.assertRaisesRegex(ValueError, "report mismatch"):
                 parse_session(day, symbols, isins, None, "2026-10-18T00:00:00+00:00")
+        changed_isin = udf.copy()
+        changed_isin[1] = changed_isin[1].replace(isins[sorted(symbols)[0]], "INE999999999")
+        with patch("nifty50_ta.live_eod.report_body", side_effect=[security, archive(changed_isin)]):
+            with self.assertRaisesRegex(ValueError, "ISIN changed"):
+                parse_session(day, symbols, isins, None, "2026-10-18T00:00:00+00:00")
+
+    def test_only_real_pre_target_issues_are_prospective(self) -> None:
+        calendar = Calendar(CALENDAR)
+        forecast = {"origin_session": "2026-10-16", "issue_kind": "prospective",
+                    "issued_at_utc": "2026-10-18T04:46:32+00:00"}
+        self.assertEqual(validate_prospective_issue(forecast, calendar), date(2026, 10, 16))
+        for issue_kind, issued_at in [
+            ("reconstructed", "2026-10-18T04:46:32+00:00"),
+            ("prospective", "2026-10-16T08:00:00+00:00"),
+            ("prospective", "2026-10-19T03:30:00+00:00"),
+        ]:
+            with self.subTest(issue_kind=issue_kind, issued_at=issued_at):
+                forecast.update(issue_kind=issue_kind, issued_at_utc=issued_at)
+                with self.assertRaises(ValueError):
+                    validate_prospective_issue(forecast, calendar)
 
     def test_outcome_uses_target_close_and_does_not_rewrite(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             state = Path(temp)
             origin = date(2026, 10, 16)
             path = path_for(state, "forecasts", origin)
-            issued = {"origin_session": origin.isoformat(), "forecasts": [
+            issued = {"origin_session": origin.isoformat(), "issue_kind": "prospective",
+                      "issued_at_utc": "2026-10-18T04:46:32+00:00", "forecasts": [
                 {"symbol": "ABC", "horizon": 1, "status": "issued",
                  "forecast_close": 105.0, "origin_close": 100.0},
                 {"symbol": "ABC", "horizon": 5, "status": "issued",

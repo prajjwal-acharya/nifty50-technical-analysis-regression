@@ -297,6 +297,19 @@ def eligible_for_issue(now: datetime, target: date) -> bool:
     return now.astimezone(IST) < datetime.combine(target, time(9), IST)
 
 
+def validate_prospective_issue(forecast: dict, calendar: Calendar) -> date:
+    """Keep reconstructed or mistimed forecasts out of prospective scoring."""
+    origin = date.fromisoformat(forecast["origin_session"])
+    issued_at = datetime.fromisoformat(forecast["issued_at_utc"])
+    if issued_at.tzinfo is None or forecast["issue_kind"] != "prospective":
+        raise ValueError(f"Forecast for {origin} lacks a prospective issue time")
+    local_issue = issued_at.astimezone(IST)
+    if (local_issue < datetime.combine(origin, time(17), IST)
+            or not eligible_for_issue(issued_at, calendar.forward(origin, 1))):
+        raise ValueError(f"Forecast for {origin} was not issued between origin close and next open")
+    return origin
+
+
 def build_outcomes(state: Path, prices: pd.DataFrame, stored_days: list[date],
                    calendar: Calendar, now: datetime) -> int:
     if not stored_days:
@@ -305,7 +318,7 @@ def build_outcomes(state: Path, prices: pd.DataFrame, stored_days: list[date],
     count = 0
     for path in sorted((state / "forecasts").glob("*/*/*.json")):
         forecast = json.loads(path.read_text())
-        origin = date.fromisoformat(forecast["origin_session"])
+        origin = validate_prospective_issue(forecast, calendar)
         for horizon in (1, 5):
             target = calendar.forward(origin, horizon)
             if target not in stored_days:
@@ -336,6 +349,7 @@ def run(state: Path, calendar_path: Path, *, source_dir: Path | None = None,
         now: datetime | None = None) -> dict:
     from scripts.verify_live_store import verify
 
+    fixed_now = now is not None
     now = now or datetime.now(UTC)
     if now.tzinfo is None:
         raise ValueError("Current time must include a timezone")
@@ -378,8 +392,9 @@ def run(state: Path, calendar_path: Path, *, source_dir: Path | None = None,
     if pending or can_issue:
         roster = roster_check(universe)
         review = action_review(symbols, baseline.date.max().date() + timedelta(days=1), target_5)
+        review_time = now if fixed_now else datetime.now(UTC)
         review["schema_version"] = 1
-        review["retrieved_at_utc"] = retrieved_at
+        review["retrieved_at_utc"] = review_time.astimezone(UTC).isoformat()
         review["roster"] = roster
         review["calendar_sha256"] = calendar.sha256
         if prior := [event for event in review["price_basis_events"]
@@ -389,29 +404,31 @@ def run(state: Path, calendar_path: Path, *, source_dir: Path | None = None,
     forecast = None
     if can_issue:
         scores = score(all_prices, state, origin, symbols)
-        assert review is not None
-        events = review["price_basis_events"]
-        entries = []
-        for scored in scores:
-            for horizon, target in ((1, target_1), (5, target_5)):
-                affected = [event for event in events if event["symbol"] == scored["symbol"]
-                            and origin < date.fromisoformat(event["ex_date"]) <= target]
-                entries.append({"symbol": scored["symbol"], "horizon": horizon,
-                                "target_session": target.isoformat(),
-                                "origin_close": scored["origin_close"],
-                                "forecast_close": None if affected else
-                                    (scored["predicted_close"] if horizon == 1 else scored["origin_close"]),
-                                "policy": "frozen_one_day_lightgbm" if horizon == 1 else "unchanged_close",
-                                "status": "abstained_known_corporate_action" if affected else "issued",
-                                "known_events": affected})
-        forecast = {"schema_version": 1, "origin_session": origin.isoformat(),
-                    "issued_at_utc": retrieved_at, "issue_kind": "prospective",
-                    "model_sha256": manifest["one_day_model_sha256"],
-                    "model_run": manifest["one_day_model_run"],
-                    "calendar_sha256": calendar.sha256,
-                    "action_screen_as_of_utc": retrieved_at,
-                    "action_screen_note": "Known NSE price-basis actions only; later announcements may require revision or abstention.",
-                    "forecasts": entries}
+        issue_time = now if fixed_now else datetime.now(UTC)
+        if eligible_for_issue(issue_time, target_1):
+            assert review is not None
+            events = review["price_basis_events"]
+            entries = []
+            for scored in scores:
+                for horizon, target in ((1, target_1), (5, target_5)):
+                    affected = [event for event in events if event["symbol"] == scored["symbol"]
+                                and origin < date.fromisoformat(event["ex_date"]) <= target]
+                    entries.append({"symbol": scored["symbol"], "horizon": horizon,
+                                    "target_session": target.isoformat(),
+                                    "origin_close": scored["origin_close"],
+                                    "forecast_close": None if affected else
+                                        (scored["predicted_close"] if horizon == 1 else scored["origin_close"]),
+                                    "policy": "frozen_one_day_lightgbm" if horizon == 1 else "unchanged_close",
+                                    "status": "abstained_known_corporate_action" if affected else "issued",
+                                    "known_events": affected})
+            forecast = {"schema_version": 1, "origin_session": origin.isoformat(),
+                        "issued_at_utc": issue_time.astimezone(UTC).isoformat(), "issue_kind": "prospective",
+                        "model_sha256": manifest["one_day_model_sha256"],
+                        "model_run": manifest["one_day_model_run"],
+                        "calendar_sha256": calendar.sha256,
+                        "action_screen_as_of_utc": review_time.astimezone(UTC).isoformat(),
+                        "action_screen_note": "Known NSE price-basis actions only; later announcements may require revision or abstention.",
+                        "forecasts": entries}
     appended = []
     for day, frame, provenance in pending:
         path = path_for(state, "sessions", day, ".csv.gz")
@@ -428,7 +445,10 @@ def run(state: Path, calendar_path: Path, *, source_dir: Path | None = None,
     if forecast is not None:
         write_once(forecast_path, json_bytes(forecast))
     outcomes = build_outcomes(state, all_prices, stored_days + [day for day, _, _ in pending], calendar, now)
-    return {"status": "updated" if appended or forecast or outcomes else "current",
+    missed_forecast = origin.isoformat() if can_issue and forecast is None else None
+    return {"status": "updated" if appended or forecast or outcomes else
+                ("missed_issue_window" if missed_forecast else "current"),
             "appended_sessions": appended, "latest_session": origin.isoformat(),
             "issued_forecast": origin.isoformat() if forecast else None,
+            "missed_forecast": missed_forecast,
             "outcomes": outcomes}

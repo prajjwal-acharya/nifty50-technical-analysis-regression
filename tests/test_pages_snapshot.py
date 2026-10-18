@@ -24,8 +24,6 @@ class PagesSnapshotTests(unittest.TestCase):
         payload = build_snapshot(Path("/nonexistent-private-store"), CALENDAR)
         self.assertEqual(payload["status"], "unavailable")
         self.assertEqual(payload["stocks"], [])
-        committed = json.loads((ROOT / "site/data/latest.json").read_text())
-        self.assertEqual(committed["stocks"], [])
 
     def test_projection_checks_targets_and_unchanged_fifth_policy(self) -> None:
         origin = date(2026, 10, 16)
@@ -70,6 +68,12 @@ class PagesSnapshotTests(unittest.TestCase):
                 forecast["forecasts"][1]["forecast_close"] = 101.0
                 output.write_text(json.dumps(forecast))
                 with self.assertRaisesRegex(ValueError, "unchanged close"):
+                    build_snapshot(state, CALENDAR, publication_authorized=True,
+                                   now=datetime.fromisoformat("2026-10-18T04:50:00+00:00"))
+                forecast["forecasts"][1]["forecast_close"] = 100.0
+                forecast["forecasts"].append(forecast["forecasts"][0])
+                output.write_text(json.dumps(forecast))
+                with self.assertRaisesRegex(ValueError, "cover both horizons"):
                     build_snapshot(state, CALENDAR, publication_authorized=True,
                                    now=datetime.fromisoformat("2026-10-18T04:50:00+00:00"))
 

@@ -73,7 +73,7 @@ h2{font:800 clamp(28px,3vw,43px)/1.14 var(--display);letter-spacing:-.05em;margi
 .provenance{border-top:1px solid var(--line);margin-top:25px;padding-top:14px;color:var(--muted);font:10px/1.9 var(--mono)}
 .provenance span{color:#c1d3d0}
 .universe{margin-bottom:95px}
-.table-actions{display:flex;gap:9px}
+.table-actions{display:flex;gap:9px;flex-wrap:wrap}
 .search{height:40px;min-width:210px;display:flex;align-items:center;gap:7px;padding:0 10px;border:1px solid var(--line);background:var(--panel)}
 .search span{font-size:22px;color:var(--muted);line-height:1}
 .search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:12px}

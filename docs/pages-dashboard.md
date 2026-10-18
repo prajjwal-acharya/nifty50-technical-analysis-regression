@@ -10,8 +10,9 @@ Python dashboard API or attempts to refresh NSE from a browser.
 The Pages workflow uploads **only `site/`** from the public repository. It
 does not check out the private live-state repository or copy any model, source
 archive, corporate-action review, or raw price dataset. The committed
-`site/data/latest.json` is an unavailable-state marker, so the deployed page
-does not expose NSE prices or forecasts yet.
+`site/data/latest.json` is the allowlisted projection from the private store.
+The repository owner confirmed permission for collection and public display
+before enabling publication.
 
 ## Public snapshot contract
 
@@ -31,19 +32,16 @@ python -m scripts.build_pages_snapshot \
   --output /tmp/nifty50-pages/latest.json
 ```
 
-For a **local, nonpublished** functional preview, build into a temporary
-directory with `--publication-authorized`, copy the resulting JSON into a
-temporary copy of `site/data/latest.json`, and serve that copy locally. The
-flag does not grant publication rights. Do not commit that output or upload
-the private repository.
+For a local replay, build into a temporary directory with
+`--publication-authorized`. The private workflow uses that flag only while its
+independent publication gate is enabled. Do not upload the private repository.
 
 NSE's [terms of use](https://www.nseindia.com/static/nse-terms-of-use) and
 [data sharing policy](https://www.nseindia.com/static/market-data/nse-data-policy)
 restrict public dissemination and display of market data, including EOD
-prices. Before switching this dashboard to real public values, obtain written
-permission or use a data source whose terms permit public display of the
-required closes and derived forecasts. The current free-stack assumption does
-not establish those rights.
+prices. The repository owner confirmed permission for the displayed closes and
+derived forecasts. Keep the runner's source and the public fields within that
+permission's scope.
 
 ## Deployment and endpoint
 
@@ -52,8 +50,12 @@ can also be run manually. GitHub Pages must be configured to use **GitHub
 Actions** as its build and deployment source. The public URL is the repository
 Pages URL, normally `https://prajjwal-acharya.github.io/nifty50-technical-analysis-regression/`.
 
-The [Phase 4 workflow](nightly-automation.md) can update the existing relative
-JSON endpoint after separate collection and publication rights are established.
+The [Phase 4 workflow](nightly-automation.md) updates the relative JSON endpoint
+after successful ingestion. The page checks its own clock before calling a
+forecast current, even if a previously loaded JSON file still says `current`.
+Use **Check update** to refetch the published snapshot without running NSE
+collection in the browser. The [Phase 5 verification](phase5-verification.md)
+checks the private replay against both the committed and deployed JSON.
 If a different permitted endpoint is later used, replace `snapshot_url` in
 `site/config.json` with its HTTPS URL. A cross-origin endpoint must allow the
 Pages origin through CORS. No API key can safely be embedded in browser code.

@@ -28,6 +28,17 @@ function validate(payload) {
 }
 
 function selectedHorizon(stock) { return stock.horizons[horizon]; }
+function isCurrentForecast(payload) {
+  if (payload.status !== 'current') return false;
+  const nextTarget = payload.stocks[0].horizons['1'].target_session;
+  return Date.now() < new Date(`${nextTarget}T09:00:00+05:30`).getTime();
+}
+function renderFreshness() {
+  if (!snapshot) return;
+  const current = isCurrentForecast(snapshot);
+  $('publication-status').textContent = current ? 'Prospective forecast on file' : 'Historical forecast · target may be resolved';
+  notice(current ? '' : 'This is an earlier issued forecast. Check the target and latest verified dates before interpreting it as current.');
+}
 
 function renderSelected() {
   if (!snapshot?.stocks.length) return;
@@ -95,7 +106,7 @@ function renderTable() {
 function render() {
   const one = snapshot.stocks[0].horizons[horizon];
   $('origin-hero').textContent = shortDate(snapshot.origin_session);
-  $('publication-status').textContent = snapshot.status === 'current' ? 'Prospective forecast on file' : 'Historical forecast · target may be resolved';
+  renderFreshness();
   $('coverage').textContent = '50';
   $('target-date').textContent = shortDate(one.target_session);
   $('target-caption').textContent = horizon === '1' ? 'next NSE session' : 'fifth NSE session';
@@ -106,11 +117,13 @@ function render() {
   $('export').disabled = false;
   $('horizon-1').setAttribute('aria-pressed', String(horizon === '1'));
   $('horizon-5').setAttribute('aria-pressed', String(horizon === '5'));
-  notice(snapshot.status === 'current' ? '' : 'This is an earlier issued forecast. Check the target and latest verified dates before interpreting it as current.');
   renderTable();
 }
 
 async function load() {
+  const checkButton = $('check-update');
+  checkButton.disabled = true;
+  checkButton.textContent = 'Checking…';
   try {
     const configResponse = await fetch('./config.json', {cache: 'no-store'});
     if (!configResponse.ok) throw new Error('Dashboard configuration is unavailable');
@@ -120,6 +133,7 @@ async function load() {
     if (!response.ok) throw new Error(`Snapshot endpoint returned ${response.status}`);
     const payload = validate(await response.json());
     if (payload.status === 'unavailable') {
+      if (snapshot) { window.location.reload(); return; }
       $('publication-status').textContent = 'PUBLIC DATA PENDING';
       $('latest-date').textContent = shortDate(payload.latest_verified_session);
       $('empty').textContent = 'Forecast results are not publicly available yet.';
@@ -129,8 +143,16 @@ async function load() {
     snapshot = payload;
     render();
   } catch (error) {
-    $('publication-status').textContent = 'SNAPSHOT UNAVAILABLE';
-    notice(`Could not load a verified snapshot: ${error.message}`);
+    if (snapshot) {
+      render();
+      notice(`Could not check for an update; showing the last loaded snapshot. ${error.message}`);
+    } else {
+      $('publication-status').textContent = 'SNAPSHOT UNAVAILABLE';
+      notice(`Could not load a verified snapshot: ${error.message}`);
+    }
+  } finally {
+    checkButton.disabled = false;
+    checkButton.textContent = '↻ Check update';
   }
 }
 
@@ -156,4 +178,6 @@ $('horizon-1').addEventListener('click', () => {horizon = '1'; if (snapshot) ren
 $('horizon-5').addEventListener('click', () => {horizon = '5'; if (snapshot) render();});
 $('search').addEventListener('input', renderTable);
 $('export').addEventListener('click', exportCsv);
+$('check-update').addEventListener('click', load);
+setInterval(renderFreshness, 60_000);
 load();
