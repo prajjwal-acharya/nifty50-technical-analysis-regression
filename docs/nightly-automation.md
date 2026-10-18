@@ -17,34 +17,37 @@ job summary provide success/failure reporting.
 
 ## Separate authorization gates
 
-The workflow is installed, but market-data collection is **paused** unless
-the private repository variable `NSE_AUTOMATION_AUTHORIZED` is exactly `true`.
+Market-data collection runs only when the private repository variable
+`NSE_AUTOMATION_AUTHORIZED` is exactly `true`.
 NSE's [terms of use](https://www.nseindia.com/static/nse-terms-of-use)
 prohibit systematic automated collection from its website without permission.
 An existing manual download or the free GitHub Actions allowance does not
-grant that permission. Keep the variable off until the permitted acquisition
-method is documented and the runner uses that method.
+grant that permission. The repository owner confirmed permission for automated
+collection before enabling the variable. If the permission limits the source
+or method, configure the runner to match those terms before its next run.
 
 Public display is a second, independent gate. It requires
-`NSE_PUBLICATION_AUTHORIZED=true` **and** a `PUBLIC_REPO_WRITE_TOKEN` secret
-limited to Contents write on the public code repository. The workflow then
+`NSE_PUBLICATION_AUTHORIZED=true` **and** a `PUBLIC_REPO_DEPLOY_KEY` secret
+whose public half is a write-enabled deploy key on the public code repository.
+The key grants access to that repository only. The workflow then
 builds the allowlisted JSON projection with
 `scripts/build_pages_snapshot.py`, commits only `site/data/latest.json`, and
 lets the public Pages workflow deploy it. NSE's
 [data sharing policy](https://www.nseindia.com/static/market-data/nse-data-policy)
-restricts redistribution and display of EOD prices. Do not enable this gate
-without permission covering the displayed closes and derived forecasts.
+restricts redistribution and display of EOD prices. The repository owner
+confirmed permission for public display of closes and derived forecasts before
+enabling the variable.
 
 The JSON URL is already the dashboard's endpoint:
 `https://prajjwal-acharya.github.io/nifty50-technical-analysis-regression/data/latest.json`.
 A Hugging Face Space is not needed for a once-daily precomputed snapshot. The
-committed endpoint currently returns an unavailable marker with no stock data.
+endpoint returns the latest authorized snapshot after the first publication.
 
 ## Verification
 
-The private workflow can be dispatched manually while both gates are off. Its
-permission-gate job should succeed with the summary “Ingestion paused” and its
-ingest job should be skipped; it must make no NSE request. A local run of the
+The private workflow can be dispatched manually to verify ingestion and
+publication. When both gates are off, its permission-gate job succeeds with
+the summary “Ingestion paused” and its ingest job is skipped. A local run of the
 pipeline against the private store remains available through
 `python -m scripts.run_live_eod --state-dir ../nifty50-live-state` when the
 data source is authorized. The runner never refits the pinned model.
