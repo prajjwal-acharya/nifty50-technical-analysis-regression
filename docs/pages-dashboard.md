@@ -52,8 +52,8 @@ can also be run manually. GitHub Pages must be configured to use **GitHub
 Actions** as its build and deployment source. The public URL is the repository
 Pages URL, normally `https://prajjwal-acharya.github.io/nifty50-technical-analysis-regression/`.
 
-When a permitted public JSON endpoint exists, replace `snapshot_url` in
+The [Phase 4 workflow](nightly-automation.md) can update the existing relative
+JSON endpoint after separate collection and publication rights are established.
+If a different permitted endpoint is later used, replace `snapshot_url` in
 `site/config.json` with its HTTPS URL. A cross-origin endpoint must allow the
-Pages origin through CORS. The browser reads the endpoint directly; no API key
-can safely be embedded in `config.json` or JavaScript. Phase 4 will connect a
-scheduled publisher once the display source is settled.
+Pages origin through CORS. No API key can safely be embedded in browser code.

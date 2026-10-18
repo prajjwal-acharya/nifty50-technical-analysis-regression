@@ -7,6 +7,7 @@ import json
 import tempfile
 import unittest
 import zipfile
+from contextlib import redirect_stdout
 from datetime import date, datetime
 from pathlib import Path
 from unittest.mock import patch
@@ -16,12 +17,22 @@ import pandas as pd
 from nifty50_ta.data_pipeline import ROOT
 from nifty50_ta.live_eod import (Calendar, build_outcomes, eligible_for_issue,
                                   parse_session, path_for, write_once)
+from scripts.run_live_eod import main as runner_main
 
 
 CALENDAR = ROOT / "config/nse_equity_calendar_2026.json"
 
 
 class LiveEodTests(unittest.TestCase):
+    def test_scheduled_runner_fails_when_report_pair_is_missing(self) -> None:
+        with (patch("sys.argv", ["run_live_eod", "--state-dir", "/tmp/state",
+                                 "--fail-if-waiting"]),
+              patch("scripts.run_live_eod.run", return_value={"status": "waiting_for_reports"})):
+            with redirect_stdout(io.StringIO()):
+                with self.assertRaises(SystemExit) as raised:
+                    runner_main()
+        self.assertEqual(raised.exception.code, 2)
+
     def test_exact_exchange_observation_horizons(self) -> None:
         calendar = Calendar(CALENDAR)
         self.assertEqual(calendar.forward(date(2026, 10, 16), 1), date(2026, 10, 19))

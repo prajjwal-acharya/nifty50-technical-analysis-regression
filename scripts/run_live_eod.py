@@ -16,8 +16,13 @@ def main() -> None:
     parser.add_argument("--calendar", type=Path, default=ROOT / "config/nse_equity_calendar_2026.json")
     parser.add_argument("--source-dir", type=Path,
                         help="Read previously downloaded official report pairs from this directory")
+    parser.add_argument("--fail-if-waiting", action="store_true",
+                        help="Exit nonzero when a due NSE session has no complete report pair")
     args = parser.parse_args()
-    print(json.dumps(run(args.state_dir, args.calendar, source_dir=args.source_dir), indent=2))
+    result = run(args.state_dir, args.calendar, source_dir=args.source_dir)
+    print(json.dumps(result, indent=2))
+    if args.fail_if_waiting and result["status"] == "waiting_for_reports":
+        raise SystemExit(2)
 
 
 if __name__ == "__main__":
