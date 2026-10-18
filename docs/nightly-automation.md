@@ -13,7 +13,10 @@ verifies the audited baseline, runs the idempotent Phase 2 updater, and commits
 only new files under `sessions/`, `forecasts/`, `reviews/`, and `outcomes/`.
 Missing due reports cause a failed run and are retried by the backup schedule
 or next run. A no-change run creates no commit. GitHub's workflow results and
-job summary provide success/failure reporting.
+job summary provide success/failure reporting. After the private commit, the
+workflow audits each issued forecast against its original Git addition and
+verified outcomes. The summary reports equal-stock rupee MAE beside the
+unchanged-close baseline only after target closes have been ingested.
 
 ## Separate authorization gates
 

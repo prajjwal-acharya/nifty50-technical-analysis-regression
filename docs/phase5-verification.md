@@ -13,6 +13,7 @@ python -m scripts.verify_phase5_replay \
   --source-dir data/dashboard \
   --public-json site/data/latest.json \
   --public-url https://prajjwal-acharya.github.io/nifty50-technical-analysis-regression/data/latest.json
+python -m scripts.prospective_performance --state-dir ../nifty50-live-state
 ```
 
 The replay reconstructs the three session files from the saved official report
@@ -22,6 +23,10 @@ to Git after its recorded issue time and before the next NSE session opened.
 The original issue was on 18 October 2026 at 10:16 IST; its private Git commit
 was at 10:17 IST, before the 19 October 09:00 open. The current projection and
 the deployed Pages JSON match for all 50 stocks and both exact target dates.
+The direct NSE download path was also checked on 18 October against the saved
+16 October report pair: both downloaded files parsed all 50 rows and matched
+the saved SHA-256 hashes. This checks the URLs and parser, but the first new
+scheduled trading-day ingestion cannot be observed before that session closes.
 
 | Failure case | Required behavior |
 | --- | --- |
@@ -57,5 +62,10 @@ private workflow. If NSE announces a new exceptional holiday or session, review
 that change before issuing further exact-session forecasts. Prospective
 performance must use only immutable forecasts issued after their origin close
 and committed before the next target opened; outcomes remain separate from the
-original forecast files. There are no realized 19 or 26 October target closes
-in this verification snapshot, so no prospective accuracy claim is made yet.
+original forecast files. `scripts.prospective_performance` checks the exact
+forecast bytes in their original Git addition commit, the issue and commit
+times, verified target closes, and saved outcome records. It reports equal-stock
+rupee MAE beside the unchanged-close baseline for each horizon. Until target
+reports arrive it says `awaiting_verified_targets`; it does not invent an
+accuracy number. There are no realized 19 or 26 October target closes in this
+verification snapshot, so no prospective accuracy claim is made yet.
