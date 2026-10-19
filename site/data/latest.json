@@ -7,7 +7,7 @@
   "origin_session": "2026-10-16",
   "schema_version": 1,
   "source_label": "NSE end-of-day security report and CM UDiFF bhavcopy",
-  "status": "current",
+  "status": "resolved_or_stale",
   "stocks": [
     {
       "horizons": {
